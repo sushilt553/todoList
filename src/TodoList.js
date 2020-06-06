@@ -1,10 +1,13 @@
 import React from 'react';
+import TodoListItem from './TodoListItem';
 
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {items: [], inputVal: ""};
         this.addItem = this.addItem.bind(this);
+        this.update = this.update.bind(this);
+        this.removeItem = this.removeItem.bind(this);
     }
 
     update(e) {
@@ -22,8 +25,16 @@ class TodoList extends React.Component {
         this.setState({inputVal: ""});
     }
 
+    removeItem(key) {
+        let filteredItems = this.state.items.filter((ele) => ele.key !== key);
+        this.setState({items: filteredItems});
+    }
+
     render() {
-        let list = this.state.items.map((ele, i) => <li key={i}>{ele}</li>)
+        let list = this.state.items.map((ele, i) => <li key={i}>
+            {ele}
+            <button onClick={() => this.removeItem(ele.key)}>Remove</button>
+            </li>)
         return (
             <div>
                 <form onSubmit={this.addItem}>
