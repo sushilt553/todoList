@@ -26,15 +26,12 @@ class TodoList extends React.Component {
     }
 
     removeItem(key) {
-        let filteredItems = this.state.items.filter((ele) => ele.key !== key);
+        let filteredItems = this.state.items.filter((ele) => ele !== key);
         this.setState({items: filteredItems});
     }
 
     render() {
-        let list = this.state.items.map((ele, i) => <li key={i}>
-            {ele}
-            <button onClick={() => this.removeItem(ele.key)}>Remove</button>
-            </li>)
+
         return (
             <div>
                 <form onSubmit={this.addItem}>
@@ -42,7 +39,7 @@ class TodoList extends React.Component {
                     <button type="submit">Add</button>
                 </form>
                 <ul>
-                    {list}
+                    <TodoListItem entries={this.state.items} delete={this.removeItem}/>
                 </ul>
             </div>
         )
